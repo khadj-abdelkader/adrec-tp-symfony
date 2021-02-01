@@ -25,7 +25,7 @@ class Song
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="string", length=8)
      */
     private $duration;
 
