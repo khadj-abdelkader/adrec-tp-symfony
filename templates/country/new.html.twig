@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}New Country{% endblock %}
+
+{% block body %}
+    <h1>Create new Country</h1>
+
+    {{ include('country/_form.html.twig') }}
+
+    <a class="btn btn-primary" href="{{ path('country_index') }}">back to list</a>
+{% endblock %}
