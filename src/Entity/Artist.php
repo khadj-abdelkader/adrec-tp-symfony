@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArtistRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Artist
      * @ORM\ManyToOne(targetEntity=Country::class)
      */
     private $country;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AlbumArtist::class, mappedBy="artist", orphanRemoval=true)
+     */
+    private $albumArtists;
+
+    public function __construct()
+    {
+        $this->albumArtists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,36 @@ class Artist
     public function setCountry(?Country $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AlbumArtist[]
+     */
+    public function getAlbumArtists(): Collection
+    {
+        return $this->albumArtists;
+    }
+
+    public function addAlbumArtist(AlbumArtist $albumArtist): self
+    {
+        if (!$this->albumArtists->contains($albumArtist)) {
+            $this->albumArtists[] = $albumArtist;
+            $albumArtist->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlbumArtist(AlbumArtist $albumArtist): self
+    {
+        if ($this->albumArtists->removeElement($albumArtist)) {
+            // set the owning side to null (unless already changed)
+            if ($albumArtist->getArtist() === $this) {
+                $albumArtist->setArtist(null);
+            }
+        }
 
         return $this;
     }
