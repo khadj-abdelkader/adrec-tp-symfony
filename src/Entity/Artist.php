@@ -23,14 +23,14 @@ class Artist
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $nationality;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $beginningYear;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Country::class)
+     */
+    private $country;
 
     public function getId(): ?int
     {
@@ -49,18 +49,6 @@ class Artist
         return $this;
     }
 
-    public function getNationality(): ?string
-    {
-        return $this->nationality;
-    }
-
-    public function setNationality(?string $nationality): self
-    {
-        $this->nationality = $nationality;
-
-        return $this;
-    }
-
     public function getBeginningYear(): ?int
     {
         return $this->beginningYear;
@@ -69,6 +57,18 @@ class Artist
     public function setBeginningYear(?int $beginningYear): self
     {
         $this->beginningYear = $beginningYear;
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }
