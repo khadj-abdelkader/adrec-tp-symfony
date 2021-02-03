@@ -19,6 +19,21 @@ class ArtistRepository extends ServiceEntityRepository
         parent::__construct($registry, Artist::class);
     }
 
+    // SELECT *
+    // FROM artist
+    // LEFT JOIN country
+    // ON artist.country_id = country.id
+    // ORDER BY artist.name ASC;
+    public function findAllOrderBy(string $order = 'ASC') {
+        return $this->createQueryBuilder('artist')
+            ->select('artist', 'country')
+            ->leftJoin('artist.country', 'country')
+            ->orderBy('artist.name', $order)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Artist[] Returns an array of Artist objects
     //  */

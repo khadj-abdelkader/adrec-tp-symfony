@@ -1,23 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Artist{% endblock %}
+{% block title %}{{ 'artist.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Artist</h1>
+    <h1>{{ 'artist.title'|trans }}</h1>
 
-    <table class="table">
+    <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ artist.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
+                <th>{{ 'artist.name'|trans }}</th>
                 <td>{{ artist.name }}</td>
             </tr>
             <tr>
-                <th>BeginningYear</th>
+                <th>{{ 'artist.beginning_year'|trans }}</th>
                 <td>{{ artist.beginningYear }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'artist.country'|trans }}</th>
+                <td>{{ artist.country.nationality }}</td>
             </tr>
         </tbody>
     </table>

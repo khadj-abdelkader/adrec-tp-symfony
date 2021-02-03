@@ -15,13 +15,30 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArtistController extends AbstractController
 {
+
+    /**
+     * @var ArtistRepository $artistRepository
+     */
+    public ArtistRepository $artistRepository;
+
+    /**
+     * ArtistController constructor.
+     * @param ArtistRepository $artistRepository
+     */
+    public function __construct(ArtistRepository $artistRepository)
+    {
+        $this->artistRepository = $artistRepository;
+    }
+
     /**
      * @Route("/", name="artist_index", methods={"GET"})
      */
-    public function index(ArtistRepository $artistRepository): Response
+    public function index(): Response
     {
+        $artists = $this->artistRepository->findAllOrderBy();
+//        $artists = $this->artistRepository->findAll();
         return $this->render('artist/index.html.twig', [
-            'artists' => $artistRepository->findAll(),
+            'artists' => $artists,
         ]);
     }
 
