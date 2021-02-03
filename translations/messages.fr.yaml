@@ -4,3 +4,12 @@ artist:
     name: "Nom"
     beginning_year: "Année de début"
     country: "Nationalité"
+
+country:
+    form:
+        name:
+            label: "Nom"
+        nationality:
+            label: "Nationalité"
+            error_not_blank: "La nationalité doit être renseignée"
+            error_length: "La nationalité doit faire minimum 3 caractères"

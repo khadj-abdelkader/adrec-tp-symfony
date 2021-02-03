@@ -1,0 +1,7 @@
+
+country.form.unique_entity: "Un pays avec ce nom existe déjà !"
+
+country.form.regex_no_numbers: "La nationalité ne peut pas contenir de chiffre"
+
+country.form.nationality.error_not_blank: "La nationalité doit être renseignée"
+country.form.nationality.error_length: "La nationalité doit faire minimum 3 caractères"
