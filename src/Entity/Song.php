@@ -35,6 +35,10 @@ class Song
     private $price;
 
     /**
+     * > Relation ManyToMany bilatérale, c'est à dire :
+     * > On peut accéder à nos Album depuis Song
+     * > On peut accéder aux Song depuis Album
+     *
      * @ORM\ManyToMany(targetEntity=Album::class, mappedBy="songs")
      */
     private $album;

@@ -20,18 +20,30 @@ class AlbumArtist
     private $id;
 
     /**
+     * > Relation ManyToOne bilatérale, c'est à dire :
+     * > On peut accéder à nos Album depuis AlbumArtist
+     * > On peut accéder aux AlbumArtist depuis Album
+     *
      * @ORM\ManyToOne(targetEntity=Album::class, inversedBy="albumArtist")
      * @ORM\JoinColumn(nullable=false)
      */
     private $album;
 
     /**
+     * > Relation ManyToOne bilatérale, c'est à dire :
+     * > On peut accéder à nos Artist depuis AlbumArtist
+     * > On peut accéder aux AlbumArtist depuis Artist
+     *
      * @ORM\ManyToOne(targetEntity=Artist::class, inversedBy="albumArtists")
      * @ORM\JoinColumn(nullable=false)
      */
     private $artist;
 
     /**
+     * > Relation ManyToMany unilatérale, c'est à dire :
+     * > On peut accéder à nos Genre depuis AlbumArtist
+     * > On ne peut pas accéder aux AlbumArtist depuis Genre
+     *
      * @ORM\ManyToMany(targetEntity=Genre::class)
      */
     private $genres;

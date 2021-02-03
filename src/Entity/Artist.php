@@ -30,18 +30,36 @@ class Artist
     private $beginningYear;
 
     /**
+     * > Relation ManyToOne unilatérale, c'est à dire :
+     * > On peut accéder à nos Country depuis Artist ($artist->getCountry())
+     * > On ne peut pas accéder aux Artist depuis Country
+     *
      * @ORM\ManyToOne(targetEntity=Country::class)
      */
     private $country;
 
     /**
+     * > Relation OneToMany bilatérale, c'est à dire :
+     * > On peut accéder à nos AlbumArtist depuis Artist
+     * > On peut accéder aux Artist depuis AlbumArtist
+     *
      * @ORM\OneToMany(targetEntity=AlbumArtist::class, mappedBy="artist", orphanRemoval=true)
      */
     private $albumArtists;
 
+    /**
+     * > Relation ManyToOne bilatérale, c'est à dire :
+     * > On peut accéder à nos Country depuis Artist ($artist->getCountry())
+     * > On ne peut pas accéder aux Artist depuis Country
+     *
+     * @ORM\ManyToMany(targetEntity=Genre::class)
+     */
+    private $genres;
+
     public function __construct()
     {
         $this->albumArtists = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +129,30 @@ class Artist
                 $albumArtist->setArtist(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Genre[]
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        $this->genres->removeElement($genre);
 
         return $this;
     }
