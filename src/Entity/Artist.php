@@ -30,15 +30,6 @@ class Artist
     private $beginningYear;
 
     /**
-     * > Relation ManyToOne unilatérale, c'est à dire :
-     * > On peut accéder à nos Country depuis Artist ($artist->getCountry())
-     * > On ne peut pas accéder aux Artist depuis Country
-     *
-     * @ORM\ManyToOne(targetEntity=Country::class)
-     */
-    private $country;
-
-    /**
      * > Relation OneToMany bilatérale, c'est à dire :
      * > On peut accéder à nos AlbumArtist depuis Artist
      * > On peut accéder aux Artist depuis AlbumArtist
@@ -55,6 +46,12 @@ class Artist
      * @ORM\ManyToMany(targetEntity=Genre::class)
      */
     private $genres;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="artists")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $country;
 
     public function __construct()
     {

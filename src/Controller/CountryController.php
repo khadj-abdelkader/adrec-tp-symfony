@@ -5,23 +5,38 @@ namespace App\Controller;
 use App\Entity\Country;
 use App\Form\CountryType;
 use App\Repository\CountryRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/country")
+ * @Route("/pays")
  */
 class CountryController extends AbstractController
 {
     /**
+     * @var CountryRepository $countryRepository
+     */
+    private CountryRepository $countryRepository;
+
+    /**
+     * CountryController constructor.
+     * @param CountryRepository $countryRepository
+     */
+    public function __construct(CountryRepository $countryRepository)
+    {
+        $this->countryRepository = $countryRepository;
+    }
+
+    /**
      * @Route("/", name="country_index", methods={"GET"})
      */
-    public function index(CountryRepository $countryRepository): Response
+    public function index(): Response
     {
         return $this->render('country/index.html.twig', [
-            'countries' => $countryRepository->findAll(),
+            'countries' => $this->countryRepository->findAll(),
         ]);
     }
 
@@ -50,11 +65,14 @@ class CountryController extends AbstractController
 
     /**
      * @Route("/{id}", name="country_show", methods={"GET"})
+     * @param string $id
+     * @return Response
+     * @throws NonUniqueResultException
      */
-    public function show(Country $country): Response
+    public function show(string $id): Response
     {
         return $this->render('country/show.html.twig', [
-            'country' => $country,
+            'country' => $this->countryRepository->findById($id),
         ]);
     }
 

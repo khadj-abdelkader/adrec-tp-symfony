@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Country;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +18,38 @@ class CountryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Country::class);
+    }
+
+    /**
+     * @param string $order
+     * @return int|mixed|string
+     */
+    public function findAllOrderBy(string $order = 'ASC') {
+        return $this->createQueryBuilder('country')
+            ->select('country', 'artists')
+            // LEFT JOIN artist
+            // ON artist.country_id = country.id
+            ->leftJoin('country.artists', 'artists')
+            ->orderBy('country.name', $order)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param string $id
+     * @return int|mixed|string
+     * @throws NonUniqueResultException
+     */
+    public function findById(string $id) {
+        return $this->createQueryBuilder('country')
+            ->select('country', 'artists')
+            // LEFT JOIN artist
+            // ON artist.country_id = country.id
+            ->leftJoin('country.artists', 'artists')
+            ->where('country.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     // /**
