@@ -17,7 +17,13 @@ class ContactController extends AbstractController
     public function __invoke(Mailer $mailer): Response
     {
 
-        $mailer->send('theau@drosalys.fr', 'Test paramètres', 'Mails/first_mail.html.twig');
+        $mailer->send(
+            'theau@drosalys.fr',
+            'Mails/first_mail.html.twig',
+            [
+                'name' => "Théau"
+            ]
+        );
 
         return $this->render('contact/index.html.twig', [
         ]);

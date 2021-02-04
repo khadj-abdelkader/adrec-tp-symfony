@@ -1,19 +1,37 @@
-<h1>
-    Ah que coucou
-</h1>
+{% block subject %}
+    Ah que coucou {{ name }}
+{% endblock subject %}
 
-<div>
+{% block text %}
+    Ah que coucou {{ name }}
+
+
     Aujourd'hui nous allons voir :
 
-    <ul>
-        <li>
-            Service
-        </li>
-        <li>
-            Mailer Symfony
-        </li>
-        <li>
-            Twig
-        </li>
-    </ul>
-</div>
+    - Service
+    - Mailer Symfony
+    - Twig
+
+{% endblock text %}
+
+{% block content %}
+    <h1>
+        Ah que coucou {{ name }}
+    </h1>
+
+    <div>
+        Aujourd'hui nous allons voir :
+
+        <ul>
+            <li>
+                Service
+            </li>
+            <li>
+                Mailer Symfony
+            </li>
+            <li>
+                Twig
+            </li>
+        </ul>
+    </div>
+{% endblock content %}
