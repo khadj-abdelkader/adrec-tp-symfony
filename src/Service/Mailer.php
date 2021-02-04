@@ -37,11 +37,12 @@ class Mailer
      * @param $to
      * @param string $template Chemin depuis le dossier template
      * @param array|null $vars
-     * @param string $replyTo
+     * @param string|null $replyTo
      * @param null $from
      * @throws TransportExceptionInterface
+     * @return bool
      */
-    public function send($to, string $template, ?array $vars = null, string $replyTo = '',  $from = null)
+    public function send($to, string $template, ?array $vars = null, ?string $replyTo = null,  $from = null): bool
     {
 
         if(null === $from) {
@@ -55,11 +56,18 @@ class Mailer
             ->to($to)
             ->subject($template->renderBlock('subject', $vars))
             ->html($template->renderBlock('content', $vars))
-            ->replyTo($replyTo)
-
 //            ->text($template->renderBlock('text', $vars))
         ;
 
-        $this->mailer->send($email);
+        if(null !== $replyTo) {
+            $email->replyTo($replyTo);
+        }
+
+        try {
+            $this->mailer->send($email);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

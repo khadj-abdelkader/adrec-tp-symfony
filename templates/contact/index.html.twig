@@ -9,6 +9,21 @@
                 <h1 class="text-center">Contactez coucou</h1>
             </div>
 
+{#            {% if app.flashes('mail_send') or app.flashes('mail_not_send') %}#}
+                <div class="col-12">
+                    {% for message in app.flashes('mail_send') %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('mail_not_send') %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+{#            {% endif %}#}
             <div class="col-12 mt-5">
                 {{ form_start(form) }}
 
@@ -26,4 +41,19 @@
             </div>
         </div>
     </div>
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-12">
+                {% for event in events %}
+                    <div>
+                        {{ event.label }} - {{ event|nice_event_date }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
 {% endblock %}

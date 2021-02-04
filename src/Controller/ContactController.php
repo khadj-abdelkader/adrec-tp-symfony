@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Event;
 use App\Form\ContactType;
 use App\Service\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,16 +30,27 @@ class ContactController extends AbstractController
 
             $data = $form->getData();
 
-            $mailer->send(
+            if( $mailer->send(
                 'theau@drosalys.fr',
                 'Mails/first_mail.html.twig',
                 $data,
                 $data['email']
-            );
+            )) {
+                $this->addFlash('mail_send', 'Votre message a bien été envoyé');
+            } else {
+                $this->addFlash('mail_not_send', "Nous n'avons pas pu envoyer le message, merci de contacter theau@drosalys.fr");
+            }
+
+            unset($form);
+            $form = $this->createForm(ContactType::class);
         }
+
+
+
 
         return $this->render('contact/index.html.twig', [
             'form' => $form->createView(),
+            'events' => $this->getDoctrine()->getRepository(Event::class)->findAll(),
         ]);
     }
 }
