@@ -35,13 +35,13 @@ class Mailer
 
     /**
      * @param $to
-     * @param string $subject
      * @param string $template Chemin depuis le dossier template
      * @param array|null $vars
+     * @param string $replyTo
      * @param null $from
      * @throws TransportExceptionInterface
      */
-    public function send($to, string $template, ?array $vars = null, $from = null)
+    public function send($to, string $template, ?array $vars = null, string $replyTo = '',  $from = null)
     {
 
         if(null === $from) {
@@ -55,6 +55,8 @@ class Mailer
             ->to($to)
             ->subject($template->renderBlock('subject', $vars))
             ->html($template->renderBlock('content', $vars))
+            ->replyTo($replyTo)
+
 //            ->text($template->renderBlock('text', $vars))
         ;
 

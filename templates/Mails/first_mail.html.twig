@@ -1,9 +1,9 @@
 {% block subject %}
-    Ah que coucou {{ name }}
+    Ah que coucou {{ fullName }}
 {% endblock subject %}
 
 {% block text %}
-    Ah que coucou {{ name }}
+    Ah que coucou {{ fullName }}
 
 
     Aujourd'hui nous allons voir :
@@ -16,22 +16,14 @@
 
 {% block content %}
     <h1>
-        Ah que coucou {{ name }}
+        Ah que coucou {{ fullName }}
     </h1>
 
     <div>
-        Aujourd'hui nous allons voir :
+        <strong>Mail: </strong> {{ email }}
+    </div>
 
-        <ul>
-            <li>
-                Service
-            </li>
-            <li>
-                Mailer Symfony
-            </li>
-            <li>
-                Twig
-            </li>
-        </ul>
+    <div>
+       {{ message }}
     </div>
 {% endblock content %}
