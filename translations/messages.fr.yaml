@@ -13,3 +13,9 @@ country:
             label: "Nationalité"
             error_not_blank: "La nationalité doit être renseignée"
             error_length: "La nationalité doit faire minimum 3 caractères"
+
+song:
+    title:
+        create: 'Créer une chanson'
+    show:
+        title: "Détail d'une chanson"
