@@ -7,30 +7,50 @@ namespace App\Service;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class Mailer
 {
+    private string $mailSender;
+    private string $mailSenderName;
     private MailerInterface $mailer;
 
     /**
      * Mailer constructor.
+     * @param string $mailSender
+     * @param string $mailSenderName
      * @param MailerInterface $mailer
      */
-    public function __construct(MailerInterface $mailer)
+    public function __construct(string $mailSender, string $mailSenderName, MailerInterface $mailer)
     {
+        $this->mailSender = $mailSender;
+        $this->mailSenderName = $mailSenderName;
         $this->mailer = $mailer;
     }
 
 
-    public function send()
+    /**
+     * @param $to
+     * @param string $subject
+     * @param string $template Chemin depuis le dossier template
+     * @param array|null $vars
+     * @param null $from
+     * @throws TransportExceptionInterface
+     */
+    public function send($to, string $subject, string $template, ?array $vars = null, $from = null)
     {
+
+        if(null === $from) {
+            $from = new Address($this->mailSender, $this->mailSenderName);
+        }
+
         $email = (new TemplatedEmail())
-            ->from('adrec@drosalys.net')
-            ->to(new Address('theau@drosalys.fr'))
-            ->subject('Thanks for signing up!')
+            ->from($from)
+            ->to($to)
+            ->subject($subject)
 
             // path of the Twig template to render
-            ->htmlTemplate('Mails/first_mail.html.twig')
+            ->htmlTemplate($template)
         ;
 
         $this->mailer->send($email);
