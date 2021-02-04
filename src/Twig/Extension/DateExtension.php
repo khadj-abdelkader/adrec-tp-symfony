@@ -5,6 +5,7 @@ namespace App\Twig\Extension;
 
 
 use App\Entity\Event;
+use App\Service\DateService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -12,16 +13,17 @@ use Twig\TwigFunction;
 
 class DateExtension extends AbstractExtension
 {
-    private TranslatorInterface $translator;
+    private DateService $dateService;
 
     /**
      * DateExtension constructor.
-     * @param TranslatorInterface $translator
+     * @param DateService $dateService
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(DateService $dateService)
     {
-        $this->translator = $translator;
+        $this->dateService = $dateService;
     }
+
 
     public function getFilters()
     {
@@ -39,33 +41,12 @@ class DateExtension extends AbstractExtension
 
     public function getEventNiceDate(Event $event)
     {
-        return $this->getNiceDate($event->getStartAt(), $event->getEndAt());
+        return $this->dateService->getNiceDate($event->getStartAt(), $event->getEndAt());
     }
 
 
     public function getNiceDate(\DateTimeInterface $startAt, ?\DateTimeInterface $endAt): string
     {
-        if ($startAt === $endAt || $endAt === null) {
-            return $startAt->format('d/m/Y H:i');
-        }
-
-        if ($startAt->format('Y-m-d') === $endAt->format('Y-m-d')) {
-
-            return $this->translator->trans('nice_date.same_day', [
-                '%day%' => $startAt->format('d/m/Y'),
-                '%start_hour%' => $startAt->format('H:i'),
-                '%end_hour%' => $endAt->format('H:i'),
-            ]);
-        }
-
-        if ($startAt->format('Y-m-d') !== $endAt->format('Y-m-d')) {
-
-            return $this->translator->trans('nice_date.different_day', [
-               '%start%' => $startAt->format('d/m/Y H:i'),
-               '%end%' => $endAt->format('d/m/Y H:i'),
-            ]);
-        }
-
-        return '';
+        return $this->dateService->getNiceDate($startAt, $endAt);
     }
 }

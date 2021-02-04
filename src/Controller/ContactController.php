@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Form\ContactType;
+use App\Service\DateService;
 use App\Service\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,11 @@ class ContactController extends AbstractController
      * @Route("/contact", name="contact")
      * @param Mailer $mailer
      * @param Request $request
+     * @param DateService $dateService
      * @return Response
      * @throws TransportExceptionInterface
      */
-    public function __invoke(Mailer $mailer, Request $request): Response
+    public function __invoke(Mailer $mailer, Request $request, DateService $dateService): Response
     {
 
         $form = $this->createForm(ContactType::class);
@@ -45,12 +47,12 @@ class ContactController extends AbstractController
             $form = $this->createForm(ContactType::class);
         }
 
-
+        $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
 
 
         return $this->render('contact/index.html.twig', [
             'form' => $form->createView(),
-            'events' => $this->getDoctrine()->getRepository(Event::class)->findAll(),
+            'events' => $events,
         ]);
     }
 }
