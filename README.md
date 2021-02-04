@@ -76,3 +76,7 @@ Theau:
     Mailer
     Service
     Securité (démo) ou Filter et function twig
+
+
+Exercices :
+    - Envoyer un mail à chaque fois qu'un pays est créé

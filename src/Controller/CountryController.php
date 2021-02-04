@@ -54,6 +54,8 @@ class CountryController extends AbstractController
             $entityManager->persist($country);
             $entityManager->flush();
 
+            //TODO Mail notification
+
             return $this->redirectToRoute('country_index');
         }
 

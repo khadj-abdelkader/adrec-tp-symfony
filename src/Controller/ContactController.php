@@ -33,7 +33,7 @@ class ContactController extends AbstractController
             $data = $form->getData();
 
             if( $mailer->send(
-                'theau@drosalys.fr',
+                $this->getParameter('admin_email'),
                 'Mails/first_mail.html.twig',
                 $data,
                 $data['email']
