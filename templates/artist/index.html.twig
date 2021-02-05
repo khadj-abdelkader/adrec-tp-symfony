@@ -5,13 +5,50 @@
 {% block body %}
     <h1>Artist index</h1>
 
+    {{ form_start(filters) }}
+    <div>
+        {# Affiche la partie de navigation entre les pages #}
+        {{ knp_pagination_render(artists) }}
+    </div>
+
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>BeginningYear</th>
-                <th>Country</th>
-                <th>actions</th>
+                <th>
+                    {{ knp_pagination_sortable(
+                        artists,
+                        'Nom',
+                        'artist.name'
+                    ) }}
+                    {{ form_widget(filters.name) }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(
+                        artists,
+                        'Année de début',
+                        'artist.beginningYear'
+                    ) }}
+                    {{ form_widget(filters.beginningYear) }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(
+                        artists,
+                        'Pays',
+                        'country.name'
+                    ) }}
+                    {{ form_widget(filters.country) }}
+                </th>
+                <th>
+                    actions
+                    <div>
+                        <button type="submit" class="filter-action">
+                            Filtrer
+                        </button>
+                        <a href="{{ path('artist_index') }}" class="filter-action">
+                            Reset
+                        </a>
+                    </div>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +69,13 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {{ form_end(filters) }}
+
+    <div>
+        {# Affiche la partie de navigation entre les pages #}
+        {{ knp_pagination_render(artists) }}
+    </div>
 
     <a class="btn btn-primary" href="{{ path('artist_new') }}">Create new</a>
 {% endblock %}

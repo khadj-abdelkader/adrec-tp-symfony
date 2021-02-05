@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Artist;
 use App\Form\ArtistType;
+use App\Form\Filter\ArtistsFilterType;
 use App\Repository\ArtistRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,13 +35,44 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/", name="artist_index", methods={"GET"})
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @param FilterBuilderUpdaterInterface $builderUpdater
+     * @return Response
      */
-    public function index(): Response
+    public function index(
+        Request $request,
+        PaginatorInterface $paginator,
+        FilterBuilderUpdaterInterface $builderUpdater
+    ): Response
     {
-        $artists = $this->artistRepository->findAllOrderBy();
-//        $artists = $this->artistRepository->findAll();
+        // KNP se base sur un QueryBuilder : on doit faire la requête permettant de le récupérer
+        $artistsQb = $this->artistRepository->queryAll();
+
+        // Création du formulaire des filtres, en methode GET uniquement
+        $filterForm = $this->createForm(ArtistsFilterType::class, null, [
+           'method' => 'GET',
+        ]);
+
+        // On vérifit que notre formulaire existe dans la requête HTTP
+        if ($request->query->has($filterForm->getName())) {
+            // S'il existe, on récupère sa soumission
+            $filterForm->submit($request->query->get($filterForm->getName()));
+            // Et on applique les filtres saisient par l'utilisateur via notre QB
+            $builderUpdater->addFilterConditions($filterForm, $artistsQb);
+        }
+
+        // KNP va ajouter un paramètre à notre requête, de nom 'page', il faut le récupérer
+        // pour gérer les changements de pages de l'utilisateur
+        $artists = $paginator->paginate(
+            $artistsQb,
+            $request->query->getInt('page', 1),
+            20
+        );
+
         return $this->render('artist/index.html.twig', [
             'artists' => $artists,
+            'filters' => $filterForm->createView(),
         ]);
     }
 

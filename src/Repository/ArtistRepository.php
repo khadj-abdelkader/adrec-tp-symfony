@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Artist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,16 +20,26 @@ class ArtistRepository extends ServiceEntityRepository
         parent::__construct($registry, Artist::class);
     }
 
+    /**
+     * @param string $order
+     * @return QueryBuilder
+     */
+    public function queryAll(string $order = 'ASC'): QueryBuilder
+    {
+        return $this->createQueryBuilder('artist')
+            ->select('artist', 'country')
+            ->leftJoin('artist.country', 'country')
+            ->orderBy('artist.id', $order)
+        ;
+    }
+
     // SELECT *
     // FROM artist
     // LEFT JOIN country
     // ON artist.country_id = country.id
     // ORDER BY artist.name ASC;
     public function findAllOrderBy(string $order = 'ASC') {
-        return $this->createQueryBuilder('artist')
-            ->select('artist', 'country')
-            ->leftJoin('artist.country', 'country')
-            ->orderBy('artist.name', $order)
+        return $this->queryAll($order)
             ->getQuery()
             ->getResult()
         ;

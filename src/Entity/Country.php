@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CountryRepository::class)
- * @UniqueEntity(fields={"name"}, message="country.form.unique_entity")
  */
 class Country
 {
