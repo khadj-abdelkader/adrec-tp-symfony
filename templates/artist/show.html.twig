@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'artist.title'|trans }}{% endblock %}
+{% block title %}{{ 'artist.title'|trans({'%artist%': artist.name }) }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'artist.title'|trans }}</h1>
+    <h1>{{ 'artist.title'|trans({'%artist%': artist.name }) }}</h1>
 
     <table class="table table-striped">
         <tbody>

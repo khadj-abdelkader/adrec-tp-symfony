@@ -1,6 +1,6 @@
 
 artist:
-    title: "Détail d'un artiste"
+    title: "Détail de l'artiste %artist%"
     name: "Nom"
     beginning_year: "Année de début"
     country: "Nationalité"
