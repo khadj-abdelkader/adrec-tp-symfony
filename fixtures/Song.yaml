@@ -1,0 +1,12 @@
+
+App\Entity\Song:
+    song_{0..20}:
+        name: <word(3)>
+        duration: <randomDigit(3)>
+        price: <randomDigit(1)>
+
+
+#sentence
+#paragraph
+#randomNumber
+#@genre*

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Song;
 use App\Form\SongType;
 use App\Repository\SongRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +19,52 @@ class SongController extends AbstractController
 {
     /**
      * @Route("/", name="song_index", methods={"GET"})
+     * @param Request $request
+     * @param FilterBuilderUpdaterInterface $builderUpdater
+     * @param SongRepository $songRepository
+     * @param PaginatorInterface $paginator
+     * @return Response
      */
-    public function index(SongRepository $songRepository): Response
+    public function index(
+        Request $request,
+        FilterBuilderUpdaterInterface $builderUpdater,
+        SongRepository $songRepository,
+        PaginatorInterface $paginator
+    ): Response
     {
+        $qb = $songRepository->queryAll();
+
+//        $filterForm = $this->createForm(CustomersCollectionFilterType::class, null, [
+//            'method' => 'GET',
+//        ]);
+//
+//        if ($request->query->has($filterForm->getName())) {
+//            $filterForm->submit($request->query->get($filterForm->getName()));
+//            $builderUpdater->addFilterConditions($filterForm, $qb);
+//        }
+
+//        Form builder :
+//
+//        $builder
+//            ->add('lastName', TextFilterType::class, [
+//                'condition_pattern' => FilterOperands::STRING_CONTAINS,
+//            ])
+//            ->add('firstName', TextFilterType::class, [
+//                'condition_pattern' => FilterOperands::STRING_CONTAINS,
+//            ])
+//            ->add('email', TextFilterType::class, [
+//                'condition_pattern' => FilterOperands::STRING_CONTAINS,
+//            ])
+//            ->add('phone', TextFilterType::class, [
+//                'condition_pattern' => FilterOperands::STRING_CONTAINS,
+//            ])
+//        ;
+
+        $songs = $paginator->paginate($qb, $request->query->getInt('page', 1), 10);
+
         return $this->render('song/index.html.twig', [
-            'songs' => $songRepository->findAll(),
+            'songs' => $songs,
+//            'filters' => $filterForm->createView(),
         ]);
     }
 

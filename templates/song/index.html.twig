@@ -8,9 +8,28 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Duration</th>
-                <th>Price</th>
+                <th>
+                    {{ knp_pagination_sortable(
+                        songs,
+                        'Name',
+                        'song.name'
+                    )|raw }}
+                    {{ form_widget(filters.name) }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(
+                        songs,
+                        'Duration',
+                        'song.duration'
+                    )|raw }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(
+                        songs,
+                        'Price',
+                        'song.price'
+                    )|raw }}
+                </th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -32,6 +51,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div>
+        {{ knp_pagination_render(songs) }}
+    </div>
 
     <a  class="btn btn-primary" href="{{ path('song_new') }}">Create new</a>
 {% endblock %}
