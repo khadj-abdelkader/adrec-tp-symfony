@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Song;
 use App\Form\SongType;
 use App\Repository\SongRepository;
-use Knp\Component\Pager\PaginatorInterface;
-use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,19 +18,17 @@ class SongController extends AbstractController
     /**
      * @Route("/", name="song_index", methods={"GET"})
      * @param Request $request
-     * @param FilterBuilderUpdaterInterface $builderUpdater
      * @param SongRepository $songRepository
-     * @param PaginatorInterface $paginator
      * @return Response
      */
     public function index(
         Request $request,
-        FilterBuilderUpdaterInterface $builderUpdater,
-        SongRepository $songRepository,
-        PaginatorInterface $paginator
+//        FilterBuilderUpdaterInterface $builderUpdater,
+        SongRepository $songRepository
+//        PaginatorInterface $paginator
     ): Response
     {
-        $qb = $songRepository->queryAll();
+//        $qb = $songRepository->queryAll();
 
 //        $filterForm = $this->createForm(CustomersCollectionFilterType::class, null, [
 //            'method' => 'GET',
@@ -60,10 +56,10 @@ class SongController extends AbstractController
 //            ])
 //        ;
 
-        $songs = $paginator->paginate($qb, $request->query->getInt('page', 1), 10);
+//        $songs = $paginator->paginate($qb, $request->query->getInt('page', 1), 10);
 
         return $this->render('song/index.html.twig', [
-            'songs' => $songs,
+            'songs' => $songRepository->findAll(),
 //            'filters' => $filterForm->createView(),
         ]);
     }

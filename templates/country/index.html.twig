@@ -16,7 +16,8 @@
         <tbody>
         {% for country in countries %}
             <tr>
-                <td>{{ country.name }}</td>
+                {# Interprète le code HTML s'il existe dans la variable à afficher #}
+                <td>{{ country.name|raw }}</td>
                 <td>{{ country.nationality }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('country_show', {'id': country.id}) }}">show</a>

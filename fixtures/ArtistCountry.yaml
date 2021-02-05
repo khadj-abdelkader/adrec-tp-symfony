@@ -1,0 +1,16 @@
+
+# Concaténation du namespace de l'entité + du nom de l'entité avec un backslash (Alt Gr + 8)
+App\Entity\Country:
+    country_{0..299}:
+        # reprendre les noms des propriétés de la classe !
+        # country() permet d'aller chercher des noms de pays aléatoire
+        name: <country()>
+        nationality: <word(1)>
+
+App\Entity\Artist:
+    artist_{0..499}:
+        name: <name()>
+        beginningYear: <numberBetween(1960, 2000)>
+        # L'étoile après le country permet de lui dire qu'il en prend un aléatoirement (* = n'importe quoi)
+        # On peut lui dire de le lier directement à un précisement avec la syntaxe : '@country0'
+        country: '@country*'

@@ -1,12 +1,8 @@
 
 App\Entity\Song:
-    song_{0..20}:
-        name: <word(3)>
-        duration: <randomDigit(3)>
-        price: <randomDigit(1)>
+    song_{0..99}:
+        name: <sentence(4)>
+        duration: <numberBetween(120, 300)>
+        price: <randomFloat(2, 0, 2)>
 
-
-#sentence
-#paragraph
-#randomNumber
-#@genre*
+# paragraph
