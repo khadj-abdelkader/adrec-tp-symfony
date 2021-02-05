@@ -15,11 +15,5 @@ country:
             error_length: "La nationalité doit faire minimum 3 caractères"
 
 nice_date:
-    same_day: "Le %day% de %start_hour% à %end_hour%"
-    different_day: "Du %start% au %end%"
-
-song:
-    title:
-        create: 'Créer une chanson'
-    show:
-        title: "Détail d'une chanson"
+    same_day: "%day% from %start_hour% to %end_hour%"
+    different_day: "From %start% to %end%"

@@ -1,0 +1,29 @@
+{% block subject %}
+    Ah que coucou {{ fullName }}
+{% endblock subject %}
+
+{% block text %}
+    Ah que coucou {{ fullName }}
+
+
+    Aujourd'hui nous allons voir :
+
+    - Service
+    - Mailer Symfony
+    - Twig
+
+{% endblock text %}
+
+{% block content %}
+    <h1>
+        Ah que coucou {{ fullName }}
+    </h1>
+
+    <div>
+        <strong>Mail: </strong> {{ email }}
+    </div>
+
+    <div>
+       {{ message }}
+    </div>
+{% endblock content %}
