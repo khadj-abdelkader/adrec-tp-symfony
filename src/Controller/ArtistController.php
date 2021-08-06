@@ -54,11 +54,11 @@ class ArtistController extends AbstractController
            'method' => 'GET',
         ]);
 
-        // On vérifit que notre formulaire existe dans la requête HTTP
+        // On vérifie que notre formulaire existe dans la requête HTTP
         if ($request->query->has($filterForm->getName())) {
             // S'il existe, on récupère sa soumission
             $filterForm->submit($request->query->get($filterForm->getName()));
-            // Et on applique les filtres saisient par l'utilisateur via notre QB
+            // Et on applique les filtres saisis par l'utilisateur via notre QB
             $builderUpdater->addFilterConditions($filterForm, $artistsQb);
         }
 
