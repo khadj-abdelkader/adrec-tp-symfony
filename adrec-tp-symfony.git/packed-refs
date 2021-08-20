@@ -1,0 +1,12 @@
+# pack-refs with: peeled fully-peeled sorted 
+c0a503b774527500a510cf7e6600f1461cbf4069 refs/heads/add-fixtures
+82e77d04f810a864c295b9e904d49140459d80e3 refs/heads/main
+82a1074062d38e3317e1b22d06a8e63367ddd8e5 refs/heads/tp-1-damien
+c217c874bef0af57b345ff7e7bb8e7bb80f0e603 refs/heads/tp-1-karim
+e657cf762affec399a79ff40c88632322fa80263 refs/heads/tp-1-lydie
+365465f329ea69b5222bb2848d1e8ebc81c336ce refs/heads/tp-1-marine
+0bd443f055d1b3b2306db12f872d6a8221353f25 refs/heads/tp-1-philipp
+8699ffb2241b107fc0ec7d47575714949840d033 refs/heads/tp-1-philipp2
+6138de6f95ec5de3446cfbbc24b271f8d2dd37ab refs/heads/tp-1-valery
+e49b02f09e688735eedb50743d91bf9372d641f3 refs/heads/tp-karim-validation
+116b5fcd1e02e4c139c9db6d1374df740b98c01d refs/heads/tp-sonia
